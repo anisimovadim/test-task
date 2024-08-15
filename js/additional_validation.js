@@ -1,0 +1,5 @@
+function phoneValidation() {
+}
+
+function emailValidation() {
+}

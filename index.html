@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Оформить займ онлайн</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="libs/dadata/suggestions.min.css" rel="stylesheet"/>
+    <link href="libs/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+    <link href="libs/chosen/chosen.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="img/favicon_apt/favicon.ico">
+    <link rel="apple-touch-icon" href="img/favicon_apt/apple-touch-icon.png">
+    <link rel="manifest" href="img/favicon_apt/site.webmanifest">
+</head>
+<body id="APT">
+<div class="container">
+    <div class="logo-block">
+
+        <div class="logo">
+            <img src="img/logo_apt.png">
+        </div>
+        <div class="logo-phone">АПТ – удобные и быстрые займы!
+            <a href="tel:88005117082">8(800)511-70-82</a>
+        </div>
+    </div>
+</div>
+<section id="applist">
+    <div class="container">
+
+        <div class="applist-wrapper">
+            <div class="applist-container">
+
+                <form id="main_form" method="post" action="/api/v1/store">
+                    <!--Не удалять и не забывать передавать СSRF -->
+                    <input type="hidden" id="csrf" name="_token" value="{{ csrf_token() }}"/>
+                    <!--Не удалять и не забывать передавать СSRF -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="sub-title">Новая заявка</div>
+                            </div>
+                            <div class="col-12 col-xl-5">
+                                <label>ФИО полностью*</label>
+                                <input type="text" name="fio" id="fio" placeholder="ФИО" data-need="1">
+                            </div>
+                            <div class="col-12 col-xl-3">
+                                <label>Дата рождения*</label>
+                                <input type="text" id="bithday" class="date-type" name="birthdate" data-need="1"
+                                       placeholder="дд.мм.гггг">
+                            </div>
+                            <div class="col-12 col-xl-2">
+                                <label>Мобильный телефон*</label>
+                                <input type="tel" name="phone_mobile" class="mobile-phone" placeholder="+79XXXXXXXXX"
+                                       data-need="1">
+                            </div>
+                            <div class="col-12 col-xl-2">
+                                <label>Доп. телефон</label>
+                                <input type="tel" name="phone_adding" class="mobile-phone" placeholder="+79XXXXXXXXX"
+                                       data-need="1">
+                            </div>
+                            <div class="col-12 col-xl-6">
+                                <label>Адрес регистрации*</label>
+                                <input type="text" id="adress_registration" name="one_string_adres_registration"
+                                       placeholder="Адрес регистрации как в паспорте" autocomplete="off"
+                                       spellcheck="false" class="suggestions-input" data-need="1">
+                            </div>
+                            <div class="col-12 col-xl-6">
+                                <label>Адрес проживания* <a href="#" class="clone_reg">Совпадает с
+                                    регистрацией</a></label>
+                                <input type="text" id="adress_living" name="one_string_adres_living"
+                                       placeholder="Адрес проживания" autocomplete="off" spellcheck="false"
+                                       class="suggestions-input" data-need="1">
+                            </div>
+                            <div class="col-6 col-xl-2">
+                                <label>Серия паспорта*</label>
+                                <input type="text" class="int serial_pass" id="serial_pass" name="pass_seria"
+                                       data-need="1" maxlength="4" placeholder="0000">
+                            </div>
+                            <div class="col-6 col-xl-2">
+                                <label>Номер паспорта*</label>
+                                <input type="text" class="int numm_pass" id="numm_pass" name="pass_number" data-need="1"
+                                       maxlength="6" placeholder="000000">
+                            </div>
+                            <div class="col-6 col-xl-2">
+                                <label>Код подразделения*</label>
+                                <input size="7" type="text" id="pass_code" class="pass_code" name="pass_code"
+                                       data-need="1" placeholder="000-000" autocomplete="off" spellcheck="false">
+                            </div>
+                            <div class="col-6 col-xl-2">
+                                <label>Дата выдачи паспорта*</label>
+                                <input id="data_pass" name="pass_get" type="text" class="data_passport date-type"
+                                       data-need="1" placeholder="ДД.ММ.ГГГГ">
+                                <!--<input id="data_pass" name="pass_date" type="date" class="data_passport" data-need="1" placeholder="ДД.ММ.ГГГГ" max="<?= date('Y-m-d'); ?>">-->
+                            </div>
+                            <div class="col-12  col-xl-4">
+                                <label>Место рождения*</label>
+                                <input type="text" class="pass_birth_where" name="pass_birth" data-need="1"
+                                       placeholder="Место рождения (как в паспорте)">
+                            </div>
+                            <div class="col-12 col-xl-6 email_field">
+                                <label>Электронная почта*</label>
+                                <input type="text" name="email" data-need="1" placeholder="mail@domain.ru">
+                            </div>
+                            <div class="col-12 col-xl-2">
+                                <a href="#" id="confirm_email" style="display: none;">Подтвердить</a>
+                                <div id="email_code_block" style="display: none;">
+                                    <label>Код подтверждения*</label>
+                                    <input type="text" data-need="1" name="email_code" placeholder="______">
+                                </div>
+                            </div>
+                            <div class="sbp-block col-12">
+                                <div class="sub-title">СБП Клиента</div>
+                                <div class="row">
+                                    <div class="col-12 col-xl-4">
+                                        <label>Мобильный телефон СБП* <a class="sbp_like_main_phone" href="#">Совпадает
+                                            с основным</a></label>
+                                        <input type="tel" class="mobile-phone" id="sbp_phone" name="sbp_phone"
+                                               placeholder="+79XXXXXXXXX" data-need="1">
+                                        <input type="hidden" name="sbp_bank_text_a">
+                                        <input type="hidden" name="sbp_payout_status" value="1">
+                                    </div>
+                                    <div class="col-12 col-xl-4">
+                                        <label>Банк СБП*</label>
+                                        <select data-need="1" class="sbp_bank_id" data-form="#main_form"
+                                                name="sbp_bank_id_a" data-placeholder="Выберите из списка"
+                                                style="display: none;">
+                                            <option></option>
+                                            <option value="100000000111">Сбербанк</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Скрытые поля -->
+                            <input type="hidden" name="sex" data-parent="#fio" value="1">
+                            <input type="hidden" name="last_name" data-parent="#fio">
+                            <input type="hidden" name="first_name" data-parent="#fio">
+                            <input type="hidden" name="father_name" data-parent="#fio">
+                            <input type="hidden" name="noOtchesvo" value="0">
+                            <input type="hidden" name="pass_whom" data-parent="#pass_code">
+                            <input type="hidden" name="birthday" data-parent="#bithday">
+                            <input type="hidden" name="pass_date" data-parent="#data_pass">
+
+                            <!-- прописка -->
+                            <div class="registration-fields">
+                                <input type="hidden" name="region_registration" data-parent="#adress_registration">
+                                <input type="hidden" name="adress_code_registration" data-parent="#adress_registration">
+                                <input type="hidden" name="postalcode_registration" data-parent="#adress_registration">
+                                <input type="hidden" name="obl_registration" data-parent="#adress_registration">
+                                <input type="hidden" name="locality_registration" data-parent="#adress_registration">
+                                <input type="hidden" name="countryside_registration" data-parent="#adress_registration">
+                                <input type="hidden" name="ray_registration" data-parent="#adress_registration">
+                                <input type="hidden" name="street_registration" data-parent="#adress_registration">
+                                <input type="hidden" name="home_registration" data-parent="#adress_registration">
+                                <input type="hidden" name="apartment_registration" data-parent="#adress_registration">
+                                <input type="hidden" name="fias_id_registration" data-parent="#adress_registration">
+                                <input type="hidden" name="okato_registration" data-parent="#adress_registration">
+                                <input type="checkbox" class="d-none" name="registration_street_off"
+                                       id="registration_street_off" value="1">
+                                <input type="checkbox" class="d-none" name="registration_home_off"
+                                       id="registration_home_off" value="1">
+                                <input type="checkbox" class="d-none" name="registration_apartment_off"
+                                       id="registration_apartment_off" value="1">
+                            </div>
+                            <!-- Проживание -->
+                            <div class="living-fields">
+                                <input type="hidden" name="region_living" data-parent="#adress_living">
+                                <input type="hidden" name="adress_code_living" data-parent="#adress_living">
+                                <input type="hidden" name="postalcode_living" data-parent="#adress_living">
+                                <input type="hidden" name="obl_living" data-parent="#adress_living">
+                                <input type="hidden" name="locality_living" data-parent="#adress_living">
+                                <input type="hidden" name="countryside_living" data-parent="#adress_living">
+                                <input type="hidden" name="ray_living" data-parent="#adress_living">
+                                <input type="hidden" name="street_living" data-parent="#adress_living">
+                                <input type="hidden" name="home_living" data-parent="#adress_living">
+                                <input type="hidden" name="apartment_living" data-parent="#adress_living">
+                                <input type="hidden" name="fias_id_living" data-parent="#adress_living">
+                                <input type="hidden" name="okato_living" data-parent="#adress_living">
+                                <input type="checkbox" class="d-none" name="living_street_off" id="living_street_off"
+                                       value="1">
+                                <input type="checkbox" class="d-none" name="living_home_off" id="living_home_off"
+                                       value="1">
+                                <input type="checkbox" class="d-none" name="living_apartment_off"
+                                       id="living_apartment_off" value="1">
+                            </div>
+                            <!-- данные пользователя -->
+                            <input type="hidden" name="login_code" value="">
+                            <input type="hidden" name="prefix" value="">
+                            <input type="hidden" name="login" value="">
+                            <input type="hidden" name="license_number" value="">
+                            <input type="hidden" name="license_date" value="">
+                            <!--<input type="hidden" name="anketaId" value="">-->
+
+
+                            <!-- Скрытые поля -->
+                            <div class="col-12 col-xl-3">
+                                <label>Сумма займа</label>
+                                <input data-need="0" type="text" name="summ" value="10000" id="allSumm"
+                                       autocomplete="off" required readonly>
+                                <input type="hidden" name="price_1" value="10000">
+                                <!--<input type="hidden" name="current_limit">-->
+                                <div class="current_limit calc-hide d-none">Одобренный лимит: <span></span> руб.</div>
+                            </div>
+                            <div class="col-12 col-xl-3 calc-hide">
+                                <label>Основной доход руб.</label>
+                                <input data-need="1" type="text" name="job_salary" autocomplete="off" id="job_salary"
+                                       required>
+                                <div id="low-profit" style="display: none;">
+                                    <input type="checkbox" id="low_job_salary_accept" name="low_job_salary_accept"
+                                           value="1"><label for="low_job_salary_accept">Подтверждаю свой доход менее
+                                    МРОТ(16 242р.)</label>
+                                </div>
+                                <div id="hight-profit" style="display: none;">
+                                    <input type="checkbox" id="over_job_salary_accept" name="over_job_salary_accept"
+                                           value="1"><label for="over_job_salary_accept">Подтверждаю свой доход более
+                                    200 000р.</label>
+                                </div>
+                                <input type="hidden" name="mrot" value="16242">
+                                <input type="hidden" name="over_profit" value="200000">
+                            </div>
+                            <input type="hidden" name="pdl_days" value="7">
+                            <input type="hidden" name="months" value="1">
+                            <div class="col-12 col-xl-6 d-none">
+                                <label>Ежемесячный платеж, руб.</label>
+                                <input type="text" value="" name="monthly_installment" readonly
+                                       id="monthly_installment">
+                            </div>
+                            <div id="custom_avans" class="col-12 col-xl-6 d-none">
+                                <label>Авансовый платеж, руб.</label>
+                                <input type="text" value="" name="avans_to_partner" readonly id="avans_to_partner">
+                            </div>
+                            <div class="col-12 d-none">
+                                <div id="partner_installment_block">
+                                    <input type="checkbox" id="partner_installment" data-locked=""
+                                           name="partner_installment" value="1">
+                                    <label for="partner_installment">Рассрочка</label><br>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-xl-6 calc-hide">
+                                <p style="margin-bottom:8px;"><br></p>
+                                <!--<div class="sub-title">Паспорт</div>-->
+                                <div class="pass-button">
+                                    <span>Прикрепить фото паспорта</span>
+                                    <span class="grey-b">Прикрепить</span>
+                                </div>
+                                <div class="files-info">
+                                    <div class="file1-info"><span></span><a href="#" class="remove_file"
+                                                                            data-file="pass1_resized"></a></div>
+                                    <div class="file2-info"><span></span><a href="#" class="remove_file"
+                                                                            data-file="pass2_resized"></a></div>
+                                </div>
+                            </div>
+
+                            <div class="sbp-block calc-hide col-12 d-none">
+                                <div class="sub-title">
+                                    <span>Безналичный перевод</span>
+                                    <input type="checkbox" name="sbp_payout_status_checkbox" data-form="#second_form"
+                                           id="sbp_payout_status"><label for="sbp_payout_status">Перевести по
+                                    СБП</label>
+                                </div>
+                            </div>
+                            <!-- Прикрепленные файлы -->
+                            <input type="hidden" name="pass1_resized">
+                            <input type="hidden" name="pass2_resized">
+
+                            <div class="col-12">
+                                <a href="#" class="more-info"><span>Дополнительная информация</span></a>
+                                <div class="more-info-block">
+                                    <label>СНИЛС</label>
+                                    <input type="text" id="pens_police" name="pens_police" placeholder="12345678910"
+                                           data-need="0">
+                                    <label>ИНН</label>
+                                    <input id="inn" type="text" name="inn" placeholder="0123456789" data-need="0">
+                                    <label>Расходы заемщика на погашение кредитов</label>
+                                    <input type="text" class="borrower_loan_payments" name="borrower_loan_payments"
+                                           data-need="0" placeholder="5 000">
+                                    <label>Гражданство</label>
+                                    <select name="russia_citizenship">
+                                        <option value="Y">РФ</option>
+                                        <option value="N">Другое</option>
+                                    </select>
+                                    <label>Тип документа, удостоверяющего личность</label>
+                                    <select name="document_kind">
+                                        <option value="PASSPORT">Паспорт</option>
+                                        <option value="OTHER">Другой</option>
+                                    </select>
+                                    <label>Наличие в собственности недвижимости</label>
+                                    <select name="estate_owner">
+                                        <option value="нет">Нет</option>
+                                        <option value="да">Да</option>
+                                    </select>
+                                    <label class="hide_br">Наличие движимого имущества</label>
+                                    <select name="movables_own">
+                                        <option value="нет">Нет</option>
+                                        <option value="да">Да</option>
+                                    </select>
+                                    <label>Наличие судебных разбирательств в качестве ответчика</label>
+                                    <select name="defendant_litigation">
+                                        <option value="нет">Нет</option>
+                                        <option value="да">Да</option>
+                                    </select>
+                                    <label>Наличие дела о банкротстве</label>
+                                    <select name="bankruptcy_personal">
+                                        <option value="нет">Нет</option>
+                                        <option value="да">Да</option>
+                                    </select>
+                                    <label>Имеются ли другие кредиты</label>
+                                    <select name="credits">
+                                        <option value="нет">Нет</option>
+                                        <option value="да">Да</option>
+                                    </select>
+                                    <label>Цели финансово хозяйственной деятельности</label>
+                                    <select name="spending_aim">
+                                        <option value="Потребительские нужды">Потребительские нужды</option>
+                                        <option value="Иное">Иное</option>
+                                    </select>
+                                    <label>Единственный бенефициар</label>
+                                    <select name="only_beneficiary">
+                                        <option value="Y">Да</option>
+                                        <option value="N">Нет</option>
+                                    </select>
+                                    <label>Текущее финансовое положение</label>
+                                    <select name="finance_income">
+                                        <option value="Хорошее">Хорошее</option>
+                                        <option value="среднее">среднее</option>
+                                        <option value="плохое">плохое</option>
+                                    </select>
+                                    <label>Деловая репутация</label>
+                                    <select name="business_reputation">
+                                        <option value="положительная">положительная</option>
+                                        <option value="удовлетворительная">удовлетворительная</option>
+                                        <option value="негативная">негативная</option>
+                                    </select>
+                                    <label>Публичное должностное лицо</label>
+                                    <select name="place_holder">
+                                        <option value="N">Нет</option>
+                                        <option value="Y">Да</option>
+                                    </select>
+                                    <label>Действия в интересах другого лица</label>
+                                    <select name="action_for">
+                                        <option value="N">Нет</option>
+                                        <option value="Y">Да</option>
+                                    </select>
+                                    <label>Гражданин другого государства</label>
+                                    <input type="text" name="other_citizenship">
+                                    <div class="place_holder_position">
+                                        <label for="place_holder_position">Должность публичного должностного
+                                            лица</label>
+                                        <input id="place_holder_position" type="text" name="place_holder_position">
+                                        <div class="data_press"></div>
+                                    </div>
+                                    <div class="sub-title">Источник доходов для погашения займа</div>
+                                    <input id="dohod_blank" type="checkbox" value="" name="repay_source[]">
+                                    <input id="dohod_zp" class="repay_source" type="checkbox" value="зарплата"
+                                           name="repay_source[]"><label for="dohod_zp">зарплата</label><br>
+                                    <input id="dohod_pensiya" class="repay_source" type="checkbox" value="пенсия"
+                                           name="repay_source[]"><label for="dohod_pensiya">пенсия</label><br>
+                                    <input id="dohod_other" class="repay_source" type="checkbox" value="иное"
+                                           name="repay_source[]"><label for="dohod_other">иное</label>
+                                    <div class="sub-title">Источник происхождения средств</div>
+                                    <input id="istok_blank" type="checkbox" value="" name="income_source[]">
+                                    <input id="istok_rabota" class="income_source" type="checkbox"
+                                           value="работа по найму" checked name="income_source[]"><label
+                                        for="istok_rabota">работа по найму</label><br>
+                                    <input id="istok_nakopleniya" class="income_source" type="checkbox"
+                                           value="собственные накопления" name="income_source[]"><label
+                                        for="istok_nakopleniya">собственные накопления</label><br>
+                                    <input id="istok_social" class="income_source" type="checkbox"
+                                           value="социальные выплаты" name="income_source[]"><label for="istok_social">социальные
+                                    выплаты (пенсии, пособия</label><br>
+                                    <input id="istok_nasledstvo" class="income_source" type="checkbox"
+                                           value="наследство" name="income_source[]"><label for="istok_nasledstvo">наследство</label><br>
+                                    <input id="istok_nedvizhka" class="income_source" type="checkbox"
+                                           value="договоры купли -продажи недвижимости" name="income_source[]"><label
+                                        for="istok_nedvizhka">договоры купли -продажи недвижимости</label><br>
+                                    <input id="istok_alimenty" class="income_source" type="checkbox" value="алименты"
+                                           name="income_source[]"><label for="istok_alimenty">алименты</label><br>
+                                    <input id="istok_dividenty" class="income_source" type="checkbox" value="дивиденды"
+                                           name="income_source[]"><label for="istok_dividenty">дивиденды</label><br>
+                                    <input id="istok_other" class="income_source" type="checkbox" value="иное"
+                                           name="income_source[]"><label for="istok_other">иное</label>
+                                    <label>Цели установления деловых отношений </label><br>
+                                    <select class="col-xs-12" name="dealing_aim">
+                                        <option value="Получение займа">Получение займа</option>
+                                        <option value="Получение займа">Иное</option>
+                                    </select>
+                                    <label>Комментарий</label>
+                                    <textarea name="additional_info"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="main-button-block">
+                                    <button type="submit" class="main-button">готово</button>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="agreement_block">
+                                    <p>НАЖИМАЯ кнопку ПРОДОЛЖИТЬ, я соглашаюсь:</p>
+                                    <p>- с условиями использования <a target="_blank" href="#">АСП</a></p>
+                                    <p>- Даю свое согласие на <a target="_blank" href="#">обработку Персональных
+                                        Данных</a></p>
+                                    <p>- подтверждаю, что ознакомлен и согласен со следующими документами:<br>
+                                        <a target="_blank" href="#">Правила выдачи займа</a><br>
+                                        <a target="_blank" href="#">Общие условия выдачи займа</a><br>
+                                        <a target="_blank" href="#">Прочие гарантии и заверения</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <div class="logo-block-footer">
+            <div class="logo">
+                <img src="img/foot-logo-apt.png">
+                <div class="logo-phone">Есть вопросы? Мы на связи!
+                    <a href="tel:88005117082">8(800)511-70-82</a>
+                    <a class="telegramm-ico" target="_blank" href="http://t.me/HelpMe4LimitsBbot"><img
+                            src="img/telegramm.png"></a>
+                    <a class="telegramm-ico" href="#"><img src="img/viber.png"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="popup-bg">
+    <div id="popup">
+        <div class="popup-title"></div>
+        <div class="popup-text"></div>
+        <div class="popup-buttons"></div>
+    </div>
+</div>
+<div class="modal-bg"></div>
+
+<div id="asp1-modal" class="sms-modal">
+    <a href="#" class="closer">×</a>
+    <div class="title">Подписание документов</div>
+    <div class="asp1">
+        <form id="asp1">
+            <input type="hidden" name="id_app">
+            <div class="proccess-description">На номер <span class="client-phone">клиента</span> было отправлено
+                sms-сообщение с кодами подтверждения и идентификатором, введите коды или идентификатор в соответствующие
+                поля ниже.
+            </div>
+            <div class="docs-lines">
+            </div>
+            <button disabled type="submit" class="main-button disabled">Подписать</button>
+        </form>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="libs/bootstrap/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+<script src="libs/dadata/jquery.suggestions.min.js"></script>
+<script src="libs/chosen/chosen.jquery.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
